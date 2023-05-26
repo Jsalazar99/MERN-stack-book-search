@@ -12,6 +12,11 @@ import Auth from '../utils/auth';
 import { saveBook, searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
+import { useMutation  } from '@apollo/client';
+import { GET_ME } from '../utils/queries';
+import {SAVE_BOOK} from '../utils/mutations';
+
+
 const SearchBooks = () => {
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -72,11 +77,11 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook(bookToSave, token);
-
-      if (!response.ok) {
+      //const response = await saveBook(bookToSave, token);
+      await saveBook(bookToSave, token);
+      /* if (!response.ok) {
         throw new Error('something went wrong!');
-      }
+      } */
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
